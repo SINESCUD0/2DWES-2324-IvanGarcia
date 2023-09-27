@@ -17,35 +17,27 @@ $matriz = array(
 	array(8, 10, 12 , 1, 12),
 	array(14, 16, 88, 3, 15)
 );
-$numdatos=count($matriz);
 $numMay = 0;
 $fi = 0;
 $co = 0;
+$columna = 0;
+$fil = 0;
 $tabla = "<table>";
 foreach($matriz as $fila){
 	$tabla .= "<tr>";
+	$fil++;
 	foreach($fila as $elemento){
+		$columna++;
 		if($numMay < $elemento){
 			$numMay = $elemento;
-			//$fi = $fila;
-			//$co = $col;
+			$co = $columna;
+			$fi = $fil;
 		}
 		$tabla .= "<td>".$elemento."</td>";
 	}
+	$columna = 0;
 	$tabla .= "</tr>";
 }
-/*for ($fila = 0; $fila < $numdatos; $fila++) {
-	$tabla .= "<tr>";
-	for ($col = 0; $col < $numdatos; $col++) {
-		$tabla .= "<td>".$matriz[$fila][$col]."</td>";
-		if($numMay < $matriz[$fila][$col]){
-			$numMay = $matriz[$fila][$col];
-			$fi = $fila;
-			$co = $col;
-		}
-	}
-	$tabla .= "</tr>";
-}*/
 $tabla .= "</table>";
 echo $tabla;
 echo "Numero mayor = $numMay que esta en la fila $fi y la columna $co";
