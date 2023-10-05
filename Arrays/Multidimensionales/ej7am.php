@@ -36,6 +36,12 @@ $notaBaseDatosMen = 10;
 $alumnoNB = 10;
 $alumnoNA = 0;
 $tabla = "<table>";
+$sumaBD = 0;
+$sumaPSP = 0;
+$sumaP = 0;
+$sumaDI = 0;
+$sumaNotas = 0;
+
 foreach($matriz as $fila){
 	$tabla .= "<tr>";
 	foreach($fila as $elemento){
@@ -43,7 +49,30 @@ foreach($matriz as $fila){
 	}
 	$tabla .= "</tr>";
 }
+
 for ($fila = 1; $fila < 11; $fila++) {
+	$sumaBD += $matriz[$fila][1];
+	$sumaPSP += $matriz[$fila][2];
+	$sumaP += $matriz[$fila][3];
+	$sumaDI += $matriz[$fila][4];
+	for ($col = 1; $col < 5; $col++) {
+		$sumaNotas += $matriz[$fila][$col];
+		if($alumnoNA < $matriz[$fila][$col]){
+			$alumnoNA = $matriz[$fila][$col];
+			$asignatura = $matriz[0][$col];
+		}
+		if($alumnoNB > $matriz[$fila][$col]){
+			$alumnoNB = $matriz[$fila][$col];
+			$asignatura2 = $matriz[0][$col];
+		}
+	}
+	$mediaAlumno = $sumaNotas / 4;
+	echo "Alumno ".$matriz[$fila][0]." su mayor nota es en $asignatura un $alumnoNA <br/>";
+	echo "Alumno ".$matriz[$fila][0]." su menor nota es en $asignatura2 un $alumnoNB <br/>";
+	echo "Alumno ".$matriz[$fila][0]." media $mediaAlumno <br/>";
+	$alumnoNA = 0;
+	$alumnoNB = 10;
+	$sumaNotas = 0;
 	if($notaBaseDatosMay < $matriz[$fila][1]){
 		$notaBaseDatosMay = $matriz[$fila][1];
 		$nombreBDMay = $matriz[$fila][0];
@@ -77,7 +106,10 @@ for ($fila = 1; $fila < 11; $fila++) {
 		$nombreDIMen = $matriz[$fila][0];
 	}
 }
-
+$mediaBD = $sumaBD / 10;
+$mediaPSP = $sumaPSP / 10;
+$mediaP = $sumaP / 10;
+$mediaDI = $sumaDI / 10;
 $tabla .= "</table>";
 echo $tabla;
 echo "Alumno con mejor nota en Base de Datos : $nombreBDMay con nota de $notaBaseDatosMay .<br/>";
@@ -88,23 +120,12 @@ echo "Alumno con mejor nota en Programacion : $nombrePMay con nota de $notaPMay 
 echo "Alumno con peor nota en Programacion : $nombrePMen con nota de $notaPMen .<br/>";
 echo "Alumno con mejor nota en Desarrollo de Interfaces : $nombreDIMay con nota de $notaDIMay .<br/>";
 echo "Alumno con peor nota en Desarrollo de Interfaces : $nombreDIMen con nota de $notaDIMen .<br/>";
+echo "Media de Base de Datos : $mediaBD <br/>";
+echo "Media de Programacion Servicios y Procesos : $mediaPSP <br/>";
+echo "Media de Programacion : $mediaP <br/>";
+echo "Media de Desarrollo de Interfaces : $mediaDI <br/>";
 
-for ($fila = 1; $fila < 11; $fila++) {
-	for ($col = 1; $col < 5; $col++) {
-		if($alumnoNA < $matriz[$fila][$col]){
-			$alumnoNA = $matriz[$fila][$col];
-			$asignatura = $matriz[0][$col];
-		}
-		if($alumnoNB > $matriz[$fila][$col]){
-			$alumnoNB = $matriz[$fila][$col];
-			$asignatura2 = $matriz[0][$col];
-		}
-	}
-	echo "Alumno ".$matriz[$fila][0]." su mayor nota es en $asignatura un $alumnoNA <br/>";
-	echo "Alumno ".$matriz[$fila][0]." su menor nota es en $asignatura2 un $alumnoNB <br/>";
-	$alumnoNA = 0;
-	$alumnoNB = 10;
-}
+
 ?>
 </BODY>
 </HTML>
