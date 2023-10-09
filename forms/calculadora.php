@@ -1,6 +1,6 @@
 <?php
-$operando1 = $_POST['operando1'];
-$operando2 = $_POST['operando2'];
+$operando1 = test_input($_POST['operando1']);
+$operando2 = test_input($_POST['operando2']);
 echo "<h1> CALCULADORA </h1>";
 switch($_POST['operacion']){
 	case 'Suma':
@@ -19,5 +19,12 @@ switch($_POST['operacion']){
 		$division = $operando1 / $operando2;
 		echo "Resultado operacion: $operando1 / $operando2 = $division";
 		break;
+}
+
+function test_input($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
 }
 ?>

@@ -3,7 +3,7 @@
 </HEAD>
 <BODY>
 <h1>CONVERSOR BINARIO</h1>
-<form name='mi_formulario' action='binario.php' method='post'>
+<form name='mi_formulario' action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method='post'>
 Numero decimal:
 <input type='number' name='decimal' value=''><br>
 <input type="submit" value="enviar">
@@ -11,7 +11,7 @@ Numero decimal:
 </FORM>
 <?php
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-	$decimal = $_POST['decimal'];
+	$decimal = test_input($_POST['decimal']);
 	echo "<h1> CONVERSOR BINARIO </h1>";
 	echo "Numero decimal: $decimal <br/>";
 	$binario = "";
@@ -25,6 +25,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		$binario = substr($binario,1); 
 	}
 	echo "Numero binario: $binario";
+}
+
+function test_input($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
 }
 ?>
 </BODY>

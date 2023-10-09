@@ -3,7 +3,7 @@
 </HEAD>
 <BODY>
 <h1>CALCULADORA</h1>
-<form name='mi_formulario' method='post'>
+<form name='mi_formulario' action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method='post'>
 Operando 1:
 <input type='number' name='operando1' value=''><br>
 Operando 2:
@@ -18,8 +18,8 @@ Selecciona operacion:<br>
 </FORM>
 <?php
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-	$operando1 = $_POST['operando1'];
-	$operando2 = $_POST['operando2'];
+	$operando1 = test_input($_POST['operando1']);
+	$operando2 = test_input($_POST['operando2']);
 	switch($_POST['operacion']){
 		case 'Suma':
 			$suma = $operando1 + $operando2;
@@ -38,6 +38,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			echo "Resultado operacion: $operando1 / $operando2 = $division";
 			break;
 	}
+}
+
+function test_input($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
 }
 ?>
 </BODY>
