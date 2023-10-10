@@ -1,24 +1,32 @@
 <?php
 $operando1 = test_input($_POST['operando1']);
 $operando2 = test_input($_POST['operando2']);
+$operacion = test_input($_POST['operacion']);
 echo "<h1> CALCULADORA </h1>";
-switch($_POST['operacion']){
-	case 'Suma':
-		$suma = $operando1 + $operando2;
-		echo "Resultado operacion: $operando1 + $operando2 = $suma";
-		break;
-	case 'Resta':
-		$resta = $operando1 - $operando2;
-		echo "Resultado operacion: $operando1 - $operando2 = $resta";
-		break;
-	case 'Producto':
-		$producto = $operando1 * $operando2;
-		echo "Resultado operacion: $operando1 * $operando2 = $producto";
-		break;
-	case 'Division':
-		$division = $operando1 / $operando2;
-		echo "Resultado operacion: $operando1 / $operando2 = $division";
-		break;
+$calculo = calculadora($operando1,$operando2,$operacion);
+echo $calculo;
+
+function calculadora($num1,$num2,$opcion){
+	$resultado = "";
+	switch($opcion){
+		case 'Suma':
+			$suma = $num1 + $num2;
+			$resultado = "Resultado operacion: $num1 + $num2 = $suma";
+			break;
+		case 'Resta':
+			$resta = $num1 - $num2;
+			$resultado = "Resultado operacion: $num1 - $num2 = $resta";
+			break;
+		case 'Producto':
+			$producto = $num1 * $num2;
+			$resultado = "Resultado operacion: $num1 * $num2 = $producto";
+			break;
+		case 'Division':
+			$division = $num1 / $num2;
+			$resultado = "Resultado operacion: $num1 / $num2 = $division";
+			break;
+	}
+	return $resultado;
 }
 
 function test_input($data) {

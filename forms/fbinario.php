@@ -14,17 +14,23 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	$decimal = test_input($_POST['decimal']);
 	echo "<h1> CONVERSOR BINARIO </h1>";
 	echo "Numero decimal: $decimal <br/>";
-	$binario = "";
-	$num = $decimal;
+
+	$binario = pasarBinario($decimal);
+	echo "Numero binario: $binario";
+
+}
+
+function pasarBinario($num){
+	$resultado = "";
 	while($num != 0){
-		$binario .= intval($num) % 2;
+		$resultado .= intval($num) % 2;
 		$num = intval($num)/2;
 	}
-	$binario = strrev($binario);
-	if($binario[0] == 0){
-		$binario = substr($binario,1); 
+	$resultado = strrev($resultado);
+	if($resultado[0] == 0){
+		$resultado = substr($resultado,1); 
 	}
-	echo "Numero binario: $binario";
+	return $resultado;
 }
 
 function test_input($data) {
