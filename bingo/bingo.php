@@ -82,6 +82,38 @@ function carton_vacio($jugador){
 	return $i;
 }
 
+function devolver_ganador($jugador1, $jugador2, $jugador3){
+	$ganador = "";
+	if(carton_vacio($jugador1) != 0 && carton_vacio($jugador2) != 0 && carton_vacio($jugador3) != 0){
+		$ganador .= "Tenemos ganador jugador 1, 2 y 3, donde jugador 1 canta ".carton_vacio($jugador1)." bingos, el jugador 2 canta ".carton_vacio($jugador2)." bingos y el jugador 3 canta ".carton_vacio($jugador3)." bingos";
+		return $ganador;
+	}
+	elseif(carton_vacio($jugador1) != 0 && carton_vacio($jugador2) != 0 && carton_vacio($jugador3) == 0){
+		$ganador .= "Tenemos ganador jugador 1 y 2, donde jugador 1 canta ".carton_vacio($jugador1)." bingos, el jugador 2 canta ".carton_vacio($jugador2)." bingos";
+		return $ganador;
+	}
+	elseif(carton_vacio($jugador1) != 0 && carton_vacio($jugador2) == 0 && carton_vacio($jugador3) != 0){
+		$ganador .= "Tenemos ganador jugador 1 y 3, donde jugador 1 canta ".carton_vacio($jugador1)." bingos, el jugador 3 canta ".carton_vacio($jugador3)." bingos";
+		return $ganador;
+	}
+	elseif(carton_vacio($jugador1) == 0 && carton_vacio($jugador2) != 0 && carton_vacio($jugador3) != 0){
+		$ganador .= "Tenemos ganador jugador 2 y 3, donde jugador 2 canta ".carton_vacio($jugador2)." bingos, el jugador 3 canta ".carton_vacio($jugador3)." bingos";
+		return $ganador;
+	}
+	elseif(carton_vacio($jugador1) != 0 && carton_vacio($jugador2) == 0 && carton_vacio($jugador3) == 0){ //si un carton de el jugador esta vacio es el ganador
+		$ganador .= "Tenemos ganador jugador 1 cantando ".carton_vacio($jugador1)." bingos";
+		return $ganador;
+	}
+	elseif(carton_vacio($jugador2) != 0 && carton_vacio($jugador1) == 0 && carton_vacio($jugador3) == 0){ //si un carton de el jugador esta vacio es el ganador
+		$ganador .= "Tenemos ganador jugador 2 cantando ".carton_vacio($jugador2)." bingos";
+		return $ganador;
+	}
+	elseif(carton_vacio($jugador3) != 0 && carton_vacio($jugador2) == 0 && carton_vacio($jugador1) == 0){ //si un carton de el jugador esta vacio es el ganador
+		$ganador .= "Tenemos ganador jugador 3 cantando ".carton_vacio($jugador3)." bingos";
+		return $ganador;
+	}
+}
+
 //Funcion que genera los numeros aleatoriamente
 function sacar_ganador($numeros_generados, $jugador1, $jugador2, $jugador3){
 	$min = 1;
@@ -96,36 +128,10 @@ function sacar_ganador($numeros_generados, $jugador1, $jugador2, $jugador3){
 			$jugador1 = eliminar_valor($jugador1,$numero_aleatorio);
 			$jugador2 = eliminar_valor($jugador2,$numero_aleatorio);
 			$jugador3 = eliminar_valor($jugador3,$numero_aleatorio);
-
-			if(carton_vacio($jugador1) != 0 && carton_vacio($jugador2) != 0 && carton_vacio($jugador3) != 0){
-				$ganador .= "Tenemos ganador jugador 1, 2 y 3, donde jugador 1 canta ".carton_vacio($jugador1)." bingos, el jugador 2 canta ".carton_vacio($jugador2)." bingos y el jugador 3 canta ".carton_vacio($jugador3)." bingos";
-				return [$ganador, $jugador1, $jugador2, $jugador3, $numeros_generados];
+			if(devolver_ganador($jugador1, $jugador2, $jugador3) != ""){
+				$ganador = devolver_ganador($jugador1, $jugador2, $jugador3);
+				return [$ganador,$jugador1,$jugador2,$jugador3];
 			}
-			elseif(carton_vacio($jugador1) != 0 && carton_vacio($jugador2) != 0 && carton_vacio($jugador3) == 0){
-				$ganador .= "Tenemos ganador jugador 1 y 2, donde jugador 1 canta ".carton_vacio($jugador1)." bingos, el jugador 2 canta ".carton_vacio($jugador2)." bingos";
-				return [$ganador, $jugador1, $jugador2, $jugador3, $numeros_generados];
-			}
-			elseif(carton_vacio($jugador1) != 0 && carton_vacio($jugador2) == 0 && carton_vacio($jugador3) != 0){
-				$ganador .= "Tenemos ganador jugador 1 y 3, donde jugador 1 canta ".carton_vacio($jugador1)." bingos, el jugador 3 canta ".carton_vacio($jugador3)." bingos";
-				return [$ganador, $jugador1, $jugador2, $jugador3, $numeros_generados];
-			}
-			elseif(carton_vacio($jugador1) == 0 && carton_vacio($jugador2) != 0 && carton_vacio($jugador3) != 0){
-				$ganador .= "Tenemos ganador jugador 2 y 3, donde jugador 2 canta ".carton_vacio($jugador2)." bingos, el jugador 3 canta ".carton_vacio($jugador3)." bingos";
-				return [$ganador, $jugador1, $jugador2, $jugador3, $numeros_generados];
-			}
-			elseif(carton_vacio($jugador1) != 0 && carton_vacio($jugador2) == 0 && carton_vacio($jugador3) == 0){ //si un carton de el jugador esta vacio es el ganador
-				$ganador .= "Tenemos ganador jugador 1 cantando ".carton_vacio($jugador1)." bingos";
-				return [$ganador, $jugador1, $jugador2, $jugador3, $numeros_generados];
-			}
-			elseif(carton_vacio($jugador2) != 0 && carton_vacio($jugador1) == 0 && carton_vacio($jugador3) == 0){ //si un carton de el jugador esta vacio es el ganador
-				$ganador .= "Tenemos ganador jugador 2 cantando ".carton_vacio($jugador2)." bingos";
-				return [$ganador, $jugador1, $jugador2, $jugador3, $numeros_generados];
-			}
-			elseif(carton_vacio($jugador3) != 0 && carton_vacio($jugador2) == 0 && carton_vacio($jugador1) == 0){ //si un carton de el jugador esta vacio es el ganador
-				$ganador .= "Tenemos ganador jugador 3 cantando ".carton_vacio($jugador3)." bingos";
-				return [$ganador, $jugador1, $jugador2, $jugador3, $numeros_generados];
-			}
-			
 	}
 }
 
