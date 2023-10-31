@@ -26,9 +26,28 @@ var_dump($jugador1);
 var_dump($jugador2);
 var_dump($jugador3);
 
+//$jugadores = generar_jugadores_cartones(6, 3);
+//var_dump($jugadores);
+
 $bombo = sacar_ganador($numeros_generados, $jugador1, $jugador2, $jugador3);
 echo "<br/>Comprobar cartones";
 var_dump($bombo);
+
+/*
+//Funcion que genera los jugadores que quieras y genera los cartones que quieras para los jugadores, es decir, puedes decir que sean 6 jugadores y cada uno tenga 4 cartones
+function generar_jugadores_cartones($numjugadores, $numcartones){
+	$jugadores = array();
+	$carton = array();
+	for($i = 0; $i <= $numjugadores - 1; $i++){
+		$jud = $i + 1;
+		for($j = 0; $j <= $numcartones - 1; $j++){
+			$car = $j + 1;
+			$jugadores["jugador".$jud]["carton".$car] = generar_carton($carton);
+		}
+	}
+	return $jugadores;
+}
+*/
 
 //Funcion que genere los cartones aleatoriamente
 function generar_carton($carton){
