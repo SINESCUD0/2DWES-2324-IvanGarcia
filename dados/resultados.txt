@@ -1,0 +1,8 @@
+Ivan#100#2#2#
+Ayman#5#1#4#
+Marta#7#4#3#
+Alba#7#2#5#
+Ivan#100#3#3#
+Ayman#6#1#5#
+Marta#100#4#4#
+Alba#8#2#6#
