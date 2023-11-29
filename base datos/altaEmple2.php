@@ -20,6 +20,12 @@ Departamento al que pertenece:
 <?php
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	
+	$dni = test_input($_POST['dni']);
+	$nombre = test_input($_POST['nombre']);
+	$salario = test_input($_POST['salario']);
+	$fecha = test_input($_POST['fecha']);
+	$codigo = test_input($_POST['codigo']);
+	
 	$servername = "localhost";
 	$username = "root";
 	$password = "rootroot";
@@ -30,26 +36,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		// set the PDO error mode to exception
 		$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-		// prepare sql and bind parameters
-		$stmt = $conn->prepare("INSERT INTO empleado (dni,nombre_emple,salario,fecha_nac) VALUES (:dni,:nombre_emple,:salario,:fecha_nac)");
-		$stmt->bindParam(':dni', $dni);
-		$stmt->bindParam(':nombre_emple', $nombre);
-		$stmt->bindParam(':salario', $salario);
-		$stmt->bindParam(':fecha_nac', $fecha);
+		insert_emple($conn,$dni,$nombre,$salario,$fecha);
 		
-	  
-		// insert a row
-		$dni = test_input($_POST['dni']);
-		$nombre = test_input($_POST['nombre']);
-		$salario = test_input($_POST['salario']);
-		$fecha = test_input($_POST['fecha']);
-		$stmt->execute();
-		
-		$stmt = $conn->prepare("INSERT INTO emple_dpto (dni,cod_dpto,fecha_ini,fecha_fin) VALUES (:dni,:cod_dpto,CURRENT_DATE,null)");
-		$stmt->bindParam(':cod_dpto',$codigo);
-		$stmt->bindParam(':dni', $dni);
-		$codigo = test_input($_POST['codigo']);
-		$stmt->execute();
+		insert_emple_dpto($conn,$dni,$codigo);
 
 		echo "New records created successfully";
 		}
@@ -66,6 +55,22 @@ function test_input($data) {
 	$data = stripslashes($data);
 	$data = htmlspecialchars($data);
 	return $data;
+}
+
+function insert_emple($conn,$dni,$nombre,$salario,$fechanac){
+	$stmt = $conn->prepare("INSERT INTO empleado (dni,nombre_emple,salario,fecha_nac) VALUES (:dni,:nombre_emple,:salario,:fecha_nac)");
+	$stmt->bindParam(':dni', $dni);
+	$stmt->bindParam(':nombre_emple', $nombre);
+	$stmt->bindParam(':salario', $salario);
+	$stmt->bindParam(':fecha_nac', $fecha);
+	$stmt->execute();
+}
+
+function insert_emple_dpto($conn,$dni,$codigo){
+	$stmt = $conn->prepare("INSERT INTO emple_dpto (dni,cod_dpto,fecha_ini,fecha_fin) VALUES (:dni,:cod_dpto,CURRENT_DATE,null)");
+	$stmt->bindParam(':cod_dpto',$codigo);
+	$stmt->bindParam(':dni', $dni);
+	$stmt->execute();
 }
 ?>
 </FORM>
