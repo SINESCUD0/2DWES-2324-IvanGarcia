@@ -42,7 +42,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add'])){
 	$conn = conexion();
 	$producto = test_input($_POST['producto']);
 	$cantidad = test_input($_POST['cantidad']);
-	//$array = add_cesta($conn,$producto,$cantidad);
+	//$array = add_cesta_session($conn,$producto,$cantidad);
 	$array = add_cesta_cookie($conn,$producto,$cantidad,$cookie_name);
 	$tabla = mostrar_cesta($conn,$array);
 	echo $tabla;
@@ -65,7 +65,7 @@ function mostrar_cesta($conn,$array){
 	return $tabla;
 }
 
-function add_cesta($conn,$producto,$cantidad){
+function add_cesta_session($conn,$producto,$cantidad){
 	$stmt = $conn->prepare("SELECT PRECIO FROM PRODUCTO WHERE ID_PRODUCTO = :id_producto LIMIT 1");
 	$stmt->bindParam(':id_producto',$producto);
 	$stmt->execute();
@@ -115,6 +115,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['end'])){
 	try {
 		$conn = conexion();
 		$array = unserialize($_COOKIE["array"]);
+		//$array = $_SESSION['array'];
 		insert_compra($conn,$nif,$array);
 	}catch(PDOException $e){
 		echo "Error: " . $e->getMessage();
@@ -171,6 +172,7 @@ function insert_compra($conn,$nif,$array){
 		}
 	}
 	setcookie('array','',-1,'/');
+	//unset($_SESSION['array']);
 }
 
 function cargar_producto($conn){
