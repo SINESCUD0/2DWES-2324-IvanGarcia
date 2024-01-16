@@ -14,6 +14,11 @@ td, tr{
 Id Producto:
 <select name="producto">
 <?php
+	$cookie_name = "usuario";
+	if(!isset($_COOKIE[$cookie_name])) {
+		header("Location: comlogincli.html");
+		exit();
+	}
 	try {
 		$conn = conexion();
 		$array = array();
