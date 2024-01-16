@@ -22,6 +22,11 @@ Fecha hasta:
 <a href="login_home.php"><input type="button" value="Volver Al Inicio" /></a>
 </FORM>
 <?php
+$cookie_name = "usuario";
+if(!isset($_COOKIE[$cookie_name])) {
+	header("Location: comlogincli.html");
+	exit();
+}
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	
 	$nif = test_input($_COOKIE['nif']);
