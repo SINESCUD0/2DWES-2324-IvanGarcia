@@ -84,7 +84,7 @@ function consulta_almacen($conn,$nif,$fechaIni,$fechaFin){
 		$resultado2=$stmt->fetchAll();
 		foreach($resultado2 as $row2) {
 			$array[] = [$row['FECHA_COMPRA'],$row2['NOMBRE'],$row2['PRECIO'],$row['UNIDADES']];
-			$gasto += $row2['PRECIO'];
+			$gasto += $row2['PRECIO'] * $row['UNIDADES'];
 		}
 	}
 	$gastos[] = $gasto;
@@ -101,7 +101,8 @@ function mostrar_pantalla($array,$nif){
 			$tabla .= "<tr>";
 			for($x = 0; $x < count($array[0][$i]); $x++){
 				if($x == 2){
-					$tabla .= "<td>".$array[0][$i][$x]."€</td>";
+					$precio = $array[0][$i][2] * $array[0][$i][3];
+					$tabla .= "<td>".$precio."€</td>";
 				}else if($x == 3){
 					if($array[0][$i][$x] > 1){
 						$tabla .= "<td>".$array[0][$i][$x]." unidades</td>";
