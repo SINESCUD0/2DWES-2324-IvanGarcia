@@ -18,7 +18,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	setcookie("nif","",time() - 3600,"/");
 	setcookie("usuario","",time() - 3600,"/");
 	setcookie("clave","",time() - 3600,"/");
-	header("Location: comlogincli.php");
+	header("Location: comlogincli.html");
     exit();
 }
 ?>
