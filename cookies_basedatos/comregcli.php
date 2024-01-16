@@ -20,6 +20,7 @@ Ciudad Cliente:
 <input type="reset" value="Borrar">
 </FORM>
 <?php
+include('funciones.php');
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	
 	$nif = test_input($_POST['nif']);
@@ -39,61 +40,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		echo $a->getMessage();
 	}
 	$conn = null;
-	
-}
-
-function test_input($data) {
-	$data = trim($data);
-	$data = stripslashes($data);
-	$data = htmlspecialchars($data);
-	return $data;
-}
-
-function conexion(){
-	$servername = "localhost";
-	$username = "root";
-	$password = "rootroot";
-	$dbname = "COMPRASWEB";
-	$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-	// set the PDO error mode to exception
-	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	return $conn;
-}
-
-function insert_cliente($conn,$nif,$nombre,$apellido,$cp,$direccion,$ciudad){
-	$stmt = $conn->prepare("SELECT NIF FROM CLIENTE WHERE NIF = :nif");
-	$stmt->bindParam(':nif', $nif);
-    $stmt->execute();
-	
-	$stmt->setFetchMode(PDO::FETCH_ASSOC);
-	$resultado=$stmt->fetchAll();
-	
-	if(empty($resultado)){
-		if(strlen($nif) === 9){
-			$numeros = substr($nif,0,-1);
-			$letra = substr($nif,-1);
-			if(is_numeric($numeros) && is_string($letra)){
-				$stmt = $conn->prepare("INSERT INTO CLIENTE (NIF,NOMBRE,APELLIDO,CP,DIRECCION,CIUDAD) VALUES (:nif,:nombre,:apellido,:cp,:direccion,:ciudad)");
-				$stmt->bindParam(':nif', $nif);
-				$stmt->bindParam(':nombre', $nombre);
-				$stmt->bindParam(':apellido', $apellido);
-				$stmt->bindParam(':cp', $cp);
-				$stmt->bindParam(':direccion', $direccion);
-				$stmt->bindParam(':ciudad', $ciudad);
-				$stmt->execute();
-				echo "New records created successfully";
-			}else{
-				throw new Exception("El nif que has introducido no es un nif");
-			}
-		}else if($nif == ""){
-			throw new Exception("El campo nif esta vacio");
-		}else if(strlen($nif) < 9){
-			throw new Exception("El campo nif no cumple con el tamaño establecido");
-		}
-	}else{
-		throw new Exception("Ya hay un cliente con ese nif");
-	}
-	
 }
 ?>
 </FORM>
