@@ -51,7 +51,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add'])){
 	$array = add_cesta_cookie($conn,$producto,$cantidad,$cookie_name);
 	$tabla = mostrar_cesta($conn,$array);
 	echo $tabla;
-	//var_dump($array);
+	var_dump($array);
 }
 
 function mostrar_cesta($conn,$array){
