@@ -271,7 +271,7 @@ function datosAlquileres($desde,$hasta,$id){
 	global $conexion;
 	$array = array();
 	try {
-		$obtenerInfo = $conexion->prepare("SELECT * FROM RALQUILERES WHERE fecha_alquiler >= :desde AND fecha_alquiler <= :hasta AND idcliente = :id ORDER BY fecha_alquiler ASC;");
+		$obtenerInfo = $conexion->prepare("SELECT * FROM RALQUILERES WHERE fecha_alquiler >= :desde AND DATE(fecha_alquiler) <= :hasta AND idcliente = :id ORDER BY fecha_alquiler ASC;");
 		$obtenerInfo->bindParam(":desde",$desde);
 		$obtenerInfo->bindParam(":hasta",$hasta);
 		$obtenerInfo->bindParam(":id",$id);
