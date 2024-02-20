@@ -235,7 +235,6 @@ function cancelarCompra($data){
 		$actualizarCliente->bindParam(":precio",$pendientePago);
 		$actualizarCliente->execute();
 		$conexion->commit();
-		setcookie('login','',-1,'/');
 	} catch (PDOException $ex) {
 		echo $ex->getMessage();
 		$conexion->rollBack();
@@ -268,7 +267,43 @@ function addCesta($coche){
 	}
 }
 
-function mostrarTabla($array,$tabla){
+function datosAlquileres($desde,$hasta,$id){
+	global $conexion;
+	$array = array();
+	try {
+		$obtenerInfo = $conexion->prepare("SELECT * FROM RALQUILERES WHERE fecha_alquiler >= :desde AND fecha_alquiler <= :hasta AND idcliente = :id ORDER BY fecha_alquiler ASC;");
+		$obtenerInfo->bindParam(":desde",$desde);
+		$obtenerInfo->bindParam(":hasta",$hasta);
+		$obtenerInfo->bindParam(":id",$id);
+		$obtenerInfo->execute();
+		$informacion=$obtenerInfo->fetchAll();
+		$numero = 0;
+		foreach($informacion as $row){
+			$obtenerInfo2 = $conexion->prepare("SELECT * FROM RVEHICULOS WHERE matricula = :matricula;");
+			$obtenerInfo2->bindParam(":matricula",$row['matricula']);
+			$obtenerInfo2->execute();
+			$informacion2=$obtenerInfo2->fetchAll();
+			foreach($informacion2 as $row2){
+				$array[$numero] = array($row['matricula'],$row2['marca'],$row2['modelo'],$row['fecha_alquiler'],$row['fecha_devolucion'],$row['preciototal']);
+				$numero += 1;
+			}
+		}
+		return $array;
+	} catch (PDOException $ex) {
+		echo $ex->getMessage();
+	}
+}
+
+function mostrarTablaConsulta($array){
+	$tabla = "<table><tr><th>Matricula</th><th>Marca</th><th>Modelo</th><th>Fecha Alquiler</th><th>Fecha Devolucion</th><th>Precio total</th></tr>";
+	foreach($array as $valores){
+		$tabla .= "<tr><td>".$valores[0]."</td><td>".$valores[1]."</td><td>".$valores[2]."</td><td>".$valores[3]."</td><td>".$valores[4]."</td><td>".$valores[5]."€</td></tr>";
+	}
+	$tabla .= "</table>";
+	echo $tabla;
+}
+
+function mostrarTabla($array){
 	$tabla = "<table><tr><th>Matricula</th><th>Marca</th><th>Modelo</th></tr>";
 	foreach($array as $matricula => $valores){
 		$tabla .= "<tr><td>$matricula</td><td>".$valores[0]."</td><td>".$valores[1]."</td></tr>";

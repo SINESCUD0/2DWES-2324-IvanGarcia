@@ -59,6 +59,9 @@ if(!empty($_GET)){
 	}else{
 		echo "OPERACION NO EXITOSA";
 		cancelarCompra($data);
+		setcookie("login","",-1,"/");
+		header('location:http://192.168.206.222/movilmad/mvc/controllers/movlogin.php');
+		exit();
 	}
 }
 ?>
